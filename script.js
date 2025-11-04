@@ -1,12 +1,12 @@
 // Mostrar y ocultar pantallas
 function mostrarLogin() {
     ocultarTodo();
-    document.getElementById("pantalla-login").style.display = "block";
+    document.getElementById("pantalla-login").style.display = "flex";
 }
 
 function mostrarRegistro() {
     ocultarTodo();
-    document.getElementById("pantalla-registro").style.display = "block";
+    document.getElementById("pantalla-registro").style.display = "flex";
 }
 
 function volverInicio() {
@@ -16,7 +16,7 @@ function volverInicio() {
 
 function mostrarFormularioAlimento() {
     ocultarTodo();
-    document.getElementById("pantalla-alimento").style.display = "block";
+    document.getElementById("pantalla-alimento").style.display = "flex";
 }
 
 function volverDashboard() {
@@ -51,7 +51,9 @@ function iniciarSesion(event) {
 function registrarUsuario(event) {
     event.preventDefault();
     alert("Usuario registrado correctamente 📝");
-    volverInicio();
+    ocultarTodo();
+    document.getElementById("pantalla-dashboard").style.display = "block";
+    mostrarAlimentos();
 }
 
 // Agregar un alimento nuevo
@@ -92,10 +94,11 @@ function mostrarAlimentos() {
 
     alimentos.forEach((item, index) => {
         const li = document.createElement("li");
-        li.textContent = `🍽 ${item.nombre} - Vence: ${item.fecha}`;
+        li.textContent = `🍽 ${item.nombre} | | Vence: ${item.fecha}`;
 
         // Color según vencimiento
         li.style.backgroundColor = (item.fecha < hoy) ? "#f8d7da" : "#d4edda";
+        li.className = "list-group-item d-flex justify-content-between align-items-center mb-3";
 
         const btnEditar = document.createElement("button");
         btnEditar.textContent = "✏";
@@ -125,7 +128,7 @@ let alimentoEditando = null;
 
 function editarAlimento(index) {
     ocultarTodo();
-    document.getElementById("formulario-edicion").style.display = "block";
+    document.getElementById("formulario-edicion").style.display = "flex";
 
     const alimentos = JSON.parse(localStorage.getItem("alimentos")) || [];
     const alimento = alimentos[index];
@@ -166,10 +169,11 @@ function eliminarActual() {
 // === FUNCIÓN PARA CAMBIAR ENTRE MODO CLARO Y OSCURO ===
 function cambiarTema() {
     const body = document.body;
-    body.classList.toggle("dark-mode");
+    body.classList.toggle('bg-light');
+    body.classList.toggle('bg-dark');
 
     // Guardar el estado del modo en localStorage
-    if (body.classList.contains("dark-mode")) {
+    if (body.classList.contains("bg-dark")) {
         localStorage.setItem("modoOscuro", "true");
     } else {
         localStorage.setItem("modoOscuro", "false");
